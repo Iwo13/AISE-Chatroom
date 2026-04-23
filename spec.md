@@ -5,7 +5,7 @@
 Einfacher webbasierter Klassenchat (MVP) für den CAS-Unterricht.  
 Entwickelt nach dem Prinzip der **Specification-Driven Development (SDD)**.
 
-- Keine Datenbank — Nachrichten werden im App-Memory gehalten (nicht persistent)
+- Nachrichten werden in `messages.json` gespeichert (persistent über Neustarts)
 - Eine einzige Seite, ein einziger Endpoint
 - Deployment auf Render.com
 
@@ -22,7 +22,7 @@ Simple web-based messenger with one page and one endpoint.
 ## Components
 - Browser UI
 - Flask app
-- In-memory message store
+- JSON-file message store (`messages.json`)
 
 ## Endpoint
 - GET /   show page
@@ -423,8 +423,9 @@ Mehrere Nutzer simulieren: mehrere Browser-Tabs mit verschiedenen Namen öffnen.
 
 ### Bekannte Einschränkungen
 
-- Nachrichten gehen bei Server-Neustart oder Redeploy verloren (In-Memory, keine DB)
-- Bei mehreren Gunicorn-Workern hat jeder Worker seinen eigenen Speicher — für das kostenlose Render-Tier mit einem Worker kein Problem
+- Nachrichten werden in `messages.json` gespeichert — lokal persistent über Neustarts
+- Auf Render Free Tier: Dateisystem ist ephemer, `messages.json` geht bei jedem Redeploy verloren. Für echte Persistenz auf Render: **Render Disk** aktivieren (Settings → Disk, $0.25/GB/Monat)
+- Bei mehreren Gunicorn-Workern könnten gleichzeitige Schreibzugriffe kollidieren — für das kostenlose Render-Tier mit einem Worker kein Problem
 
 ---
 

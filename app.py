@@ -1,12 +1,26 @@
 from flask import Flask, request, redirect, render_template, make_response
 from datetime import datetime
+import json
+import os
 
 app = Flask(__name__)
-messages = []
+
+MESSAGES_FILE = 'messages.json'
+
+def load_messages():
+    if os.path.exists(MESSAGES_FILE):
+        with open(MESSAGES_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return []
+
+def save_messages(messages):
+    with open(MESSAGES_FILE, 'w', encoding='utf-8') as f:
+        json.dump(messages, f, ensure_ascii=False, indent=2)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     name = request.cookies.get('username', '').strip()
+    messages = load_messages()
 
     if request.method == 'POST':
         action = request.form.get('action')
@@ -30,6 +44,7 @@ def index():
                     'text': text,
                     'time': datetime.now().strftime('%H:%M · %d.%m.%Y'),
                 })
+                save_messages(messages)
             return redirect('/#bottom')
 
     return render_template('index.html', name=name, messages=messages)
