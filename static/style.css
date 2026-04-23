@@ -1,0 +1,192 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f0f2f5;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Name entry screen ── */
+.name-screen {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 360px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+}
+
+.name-screen h1 {
+  font-size: 1.3rem;
+  margin-bottom: 0.25rem;
+  color: #1a1a2e;
+}
+
+.name-screen p {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.name-screen input[type="text"] {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.name-screen input[type="text"]:focus { border-color: #4f46e5; }
+
+.error {
+  color: #dc2626;
+  font-size: 0.8rem;
+  margin-top: 0.4rem;
+  min-height: 1.1rem;
+}
+
+.name-screen button {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.7rem;
+  background: #4f46e5;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.name-screen button:hover { background: #4338ca; }
+
+/* ── Chat screen ── */
+.chat-screen {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 640px;
+  height: 92vh;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  overflow: hidden;
+}
+
+header {
+  padding: 0.9rem 1.2rem;
+  background: #4f46e5;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+header h1 { font-size: 1.05rem; font-weight: 600; }
+
+.user-badge {
+  font-size: 0.8rem;
+  background: rgba(255,255,255,0.2);
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+}
+
+/* message list */
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.empty-hint {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.875rem;
+  margin: auto;
+}
+
+.msg {
+  max-width: 78%;
+  padding: 0.55rem 0.85rem;
+  border-radius: 12px;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.msg.own {
+  align-self: flex-end;
+  background: #4f46e5;
+  color: #fff;
+  border-bottom-right-radius: 3px;
+}
+
+.msg.other {
+  align-self: flex-start;
+  background: #f3f4f6;
+  color: #111;
+  border-bottom-left-radius: 3px;
+}
+
+.meta {
+  font-size: 0.72rem;
+  margin-bottom: 0.2rem;
+  opacity: 0.7;
+}
+
+.msg.own .meta { text-align: right; }
+
+/* input bar */
+.char-count {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  text-align: right;
+  padding: 0 1rem 0.3rem;
+  flex-shrink: 0;
+}
+
+.char-count.warn { color: #dc2626; }
+
+.input-bar {
+  padding: 0.8rem 1rem;
+  border-top: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.input-bar form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input-bar input[type="text"] {
+  flex: 1;
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input-bar input[type="text"]:focus { border-color: #4f46e5; }
+
+.input-bar button {
+  padding: 0.6rem 1.1rem;
+  background: #4f46e5;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.input-bar button:hover { background: #4338ca; }

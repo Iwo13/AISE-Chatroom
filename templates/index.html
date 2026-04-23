@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% if name %}
+  <meta http-equiv="refresh" content="5; url=/#bottom">
+  {% endif %}
+  <title>AISE Chatroom</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+{% if not name %}
+<!-- ── Name entry screen (REQ-F1.x) ── -->
+<div class="name-screen">
+  <h1>AISE Chatroom</h1>
+  <p>Gib deinen Namen ein, um dem Chat beizutreten.</p>
+  <form method="post" action="/">
+    <input type="hidden" name="action" value="set_name">
+    <input type="text" name="name" placeholder="Dein Name"
+           maxlength="50" autofocus autocomplete="off">
+    {% if name_error %}
+    <p class="error">{{ name_error }}</p>
+    {% else %}
+    <p class="error"></p>
+    {% endif %}
+    <button type="submit">Beitreten</button>
+  </form>
+</div>
+
+{% else %}
+<!-- ── Chat screen (REQ-F2.x, F3.x, F4.x) ── -->
+<div class="chat-screen">
+
+  <header>
+    <h1>AISE Chatroom</h1>
+    <span class="user-badge">{{ name }}</span>
+  </header>
+
+  <div class="messages" id="messages">
+    {% if not messages %}
+    <p class="empty-hint">Noch keine Nachrichten. Schreib die erste!</p>
+    {% endif %}
+    {% for m in messages %}
+    <div class="msg {{ 'own' if m.sender == name else 'other' }}">
+      <div class="meta">
+        {% if m.sender != name %}{{ m.sender }} · {% endif %}{{ m.time }}
+      </div>
+      {{ m.text }}
+    </div>
+    {% endfor %}
+    <div id="bottom"></div>
+  </div>
+
+  <div class="char-count">
+    <span id="char-num">0</span>/500
+  </div>
+
+  <div class="input-bar">
+    <form method="post" action="/#bottom" id="msg-form">
+      <input type="hidden" name="action" value="send_message">
+      <input type="text" name="message" id="msg-input"
+             placeholder="Nachricht eingeben …"
+             maxlength="500" autocomplete="off">
+      <button type="submit">Senden</button>
+    </form>
+  </div>
+
+</div>
+
+<script>
+  const input = document.getElementById('msg-input');
+  const counter = document.getElementById('char-num');
+  input.focus();
+  input.addEventListener('input', () => {
+    const len = input.value.length;
+    counter.textContent = len;
+    counter.parentElement.classList.toggle('warn', len > 450);
+  });
+</script>
+{% endif %}
+
+</body>
+</html>
