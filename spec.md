@@ -428,7 +428,52 @@ Mehrere Nutzer simulieren: mehrere Browser-Tabs mit verschiedenen Namen öffnen.
 
 ---
 
-## Tooling
+## Reflexion: SWOT — Specification-Driven Development (A4)
+
+*Perspektive: Einsatz von SDD in der eigenen Organisation*
+
+### Stärken
+
+| | |
+|---|---|
+| **Klare Anforderungen vor dem Code** | Die Spezifikation zwingt das Team, Konzepte und Anforderungen zu klären, bevor Code entsteht — reduziert Missverständnisse |
+| **Nachvollziehbare Entscheidungen** | Designentscheidungen (z.B. kein Login, kein DB) sind dokumentiert und begründbar |
+| **KI-Unterstützung skaliert** | Mit einer guten Spec kann KI grossen Teil der Implementierung übernehmen — auch ohne tiefe Programmierkenntnisse im Team |
+| **Traceability** | Jede Anforderung (REQ-ID) ist auf Code zurückführbar — erleichtert Reviews und Änderungen |
+| **Qualitätssicherung früh im Prozess** | Requirements Quality Check (Schritt 4) findet Lücken bevor Code geschrieben wird |
+
+### Schwächen
+
+| | |
+|---|---|
+| **Aufwand für die Spezifikation** | Klassendiagramm, Use Cases, Feature-Katalog — für ein kleines MVP ist der Dokumentationsaufwand relativ hoch |
+| **Spezifikation kann veralten** | Sobald der Code evoliert, hinkt die Spec nach — Pflege erfordert Disziplin |
+| **KI-generierter Code braucht Verifikation** | Der Code ist nicht automatisch korrekt — menschliches Review und Testen bleibt notwendig |
+| **Schwierig bei explorativen Projekten** | Wenn Anforderungen unklar oder laufend ändern, bremst eine starre Spec mehr als sie hilft |
+
+### Möglichkeiten
+
+| | |
+|---|---|
+| **Schnellere Onboarding neuer Teammitglieder** | Eine vollständige Spec erklärt das System, ohne den Code lesen zu müssen |
+| **Basis für automatisierte Tests** | REQ-IDs können direkt als Testfälle übernommen werden |
+| **Wiederverwendbare Spezifikationsmuster** | Einmal etablierte Vorlagen (Feature-Katalog, UC-Format) lassen sich für weitere Projekte nutzen |
+| **Bessere Zusammenarbeit zwischen Fach und IT** | Nicht-technische Stakeholder können Spezifikation lesen und validieren, ohne Code zu verstehen |
+| **KI als Qualitätsprüfer** | Schritt 4 (Requirements Quality Check) zeigt, dass KI Lücken und Widersprüche findet, die Menschen übersehen |
+
+### Gefahren
+
+| | |
+|---|---|
+| **Scheinsicherheit durch vollständige Spec** | Eine detaillierte Spezifikation suggeriert Vollständigkeit — reale Nutzerbedürfnisse können trotzdem fehlen |
+| **Over-Engineering der Spezifikation** | Teams können sich in Dokumentation verlieren statt zu liefern |
+| **KI-generierter Code ohne Verständnis übernommen** | Wenn das Team den Code nicht versteht, entstehen Wartungsprobleme |
+| **Abhängigkeit von KI-Tools** | Wenn Tools nicht verfügbar sind (Kosten, Datenschutz, Halluzinationen), bricht der Prozess ein |
+| **Datenschutz** | Spezifikationen mit sensiblen Geschäftsanforderungen werden an externe KI-Dienste gesendet |
+
+---
+
+
 
 | Zweck | Tool |
 |---|---|
