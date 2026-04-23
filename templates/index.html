@@ -3,9 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  {% if name %}
-  <meta http-equiv="refresh" content="5; url=/#bottom">
-  {% endif %}
   <title>AISE Chatroom</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -73,11 +70,22 @@
   const input = document.getElementById('msg-input');
   const counter = document.getElementById('char-num');
   input.focus();
+
   input.addEventListener('input', () => {
     const len = input.value.length;
     counter.textContent = len;
     counter.parentElement.classList.toggle('warn', len > 450);
   });
+
+  // Auto-refresh alle 5s, pausiert während der Nutzer tippt (REQ-F4.1)
+  let refreshTimer;
+  function scheduleRefresh() {
+    clearTimeout(refreshTimer);
+    refreshTimer = setTimeout(() => { window.location.href = '/#bottom'; }, 5000);
+  }
+  input.addEventListener('focus', () => clearTimeout(refreshTimer));
+  input.addEventListener('blur', scheduleRefresh);
+  scheduleRefresh();
 </script>
 {% endif %}
 
