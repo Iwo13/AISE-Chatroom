@@ -412,11 +412,14 @@ Mehrere Nutzer simulieren: mehrere Browser-Tabs mit verschiedenen Namen öffnen.
 ### Deployment auf Render.com
 
 1. Dateien in ein GitHub-Repository pushen: https://github.com/Iwo13/AISE-Chatroom
-2. render.com → **New Web Service** → GitHub-Repo verbinden
-3. Render erkennt `render.yaml` automatisch:
-   - Build: `pip install -r requirements.txt`
-   - Start: `gunicorn app:app`
-4. **Live-URL: https://aise-chatroom.onrender.com**
+2. render.com → **New Web Service** → GitHub-Repo verbinden → Branch `main`
+3. Einstellungen im Dashboard manuell setzen (render.yaml überschreibt bestehende Services **nicht**):
+   - Build Command: `pip install -r requirements.txt`
+   - Start Command: `gunicorn app:app --bind 0.0.0.0:$PORT`
+4. **Save Changes** → Render deployt automatisch
+5. **Live-URL: https://aise-chatroom.onrender.com**
+
+> **Hinweis:** `render.yaml` greift nur beim erstmaligen Verbinden via Blueprint, nicht bei manuell erstellten Services. Start Command im Dashboard muss `--bind 0.0.0.0:$PORT` enthalten, sonst antwortet Gunicorn nicht auf Renders internen Port.
 
 ### Bekannte Einschränkungen
 
