@@ -411,12 +411,12 @@ Mehrere Nutzer simulieren: mehrere Browser-Tabs mit verschiedenen Namen öffnen.
 
 ### Deployment auf Render.com
 
-1. Dateien in ein GitHub-Repository pushen
+1. Dateien in ein GitHub-Repository pushen: https://github.com/Iwo13/AISE-Chatroom
 2. render.com → **New Web Service** → GitHub-Repo verbinden
 3. Render erkennt `render.yaml` automatisch:
    - Build: `pip install -r requirements.txt`
    - Start: `gunicorn app:app`
-4. Nach dem Build ist die App unter `https://<name>.onrender.com` erreichbar
+4. **Live-URL: https://aise-chatroom.onrender.com**
 
 ### Bekannte Einschränkungen
 
