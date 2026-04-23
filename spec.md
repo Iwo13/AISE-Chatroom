@@ -358,10 +358,10 @@ AISE-Chatroom/
 #### app.py — Flask-Anwendung
 
 - Einziger Endpoint `GET /` / `POST /` (gemäss Architektur)
-- Nachrichten werden in einer Python-Liste `messages` im App-Memory gehalten
+- Storage-Backend wird automatisch gewählt: PostgreSQL wenn `DATABASE_URL` gesetzt, sonst `messages.json`
 - POST unterscheidet zwei Aktionen via verstecktem `action`-Feld:
   - `set_name` → setzt Cookie `username` (max_age 24h), Redirect nach `/`
-  - `send_message` → hängt Nachricht an Liste, Redirect nach `/#bottom`
+  - `send_message` → speichert Nachricht, Redirect nach `/#bottom`
 - Post-Redirect-Get (PRG) Pattern verhindert doppelte Submissions bei Seitenrefresh
 - Timestamp wird serverseitig mit `datetime.now()` gesetzt (REQ-F2.5)
 
@@ -421,10 +421,25 @@ Mehrere Nutzer simulieren: mehrere Browser-Tabs mit verschiedenen Namen öffnen.
 
 > **Hinweis:** `render.yaml` greift nur beim erstmaligen Verbinden via Blueprint, nicht bei manuell erstellten Services. Start Command im Dashboard muss `--bind 0.0.0.0:$PORT` enthalten, sonst antwortet Gunicorn nicht auf Renders internen Port.
 
+### Persistenz
+
+| Umgebung | Storage | Verhalten |
+|---|---|---|
+| Lokal (kein `DATABASE_URL`) | `messages.json` | Persistent über Neustarts |
+| Render (mit `DATABASE_URL`) | PostgreSQL | Dauerhaft persistent |
+
+### PostgreSQL-Setup auf Render
+
+1. Render Dashboard → **New +** → **PostgreSQL** → Name: `aise-chatroom-db`, Plan: Free → **Create Database**
+2. In der Datenbank-Übersicht → Abschnitt **Connections** → **Internal Database URL** kopieren
+3. Web Service `aise-chatroom` → **Environment** → Add Environment Variable:
+   - Key: `DATABASE_URL`
+   - Value: *(Internal Database URL)*
+4. **Save Changes** → Render deployt automatisch
+
 ### Bekannte Einschränkungen
 
-- Nachrichten werden in `messages.json` gespeichert — lokal persistent über Neustarts
-- Auf Render Free Tier: Dateisystem ist ephemer, `messages.json` geht bei jedem Redeploy verloren. Für echte Persistenz auf Render: **Render Disk** aktivieren (Settings → Disk, $0.25/GB/Monat)
+- Render Free PostgreSQL: 1 GB Speicher, wird nach 90 Tagen Inaktivität gelöscht
 - Bei mehreren Gunicorn-Workern könnten gleichzeitige Schreibzugriffe kollidieren — für das kostenlose Render-Tier mit einem Worker kein Problem
 
 ---
